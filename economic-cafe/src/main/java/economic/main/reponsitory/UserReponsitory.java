@@ -21,4 +21,7 @@ public interface UserReponsitory extends JpaRepository<User, Integer> {
 
     @Query("SELECT u.refreshToken FROM User u where u.id = :id") 
     String findResfreshToken(@Param("id") Integer idUser);
+
+    @Query("select u from User u where u.deleted = false and u.logout = null and u.username = :username")
+    Optional<User> findByUsernameAndCheckLogin(@Param("username") String username);
 }

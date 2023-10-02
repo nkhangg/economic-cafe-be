@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
@@ -53,6 +54,7 @@ public class User implements UserDetails{
 	@Transient
 	private String roleName;
 
+	@JsonFormat(pattern="dd/MM/yyy HH:mm:ss")
 	private Date birthday = null;
 
 	@Column(name="ship_address")
@@ -70,9 +72,11 @@ public class User implements UserDetails{
     private boolean deleted =false;
 
 	@Column(name="updated_at")
+	@JsonFormat(pattern="dd/MM/yyy HH:mm:ss")
 	private Date updatedAt = new Date();
 
     @Column(name="created_at")
+	@JsonFormat(pattern="dd/MM/yyy HH:mm:ss")
 	private Date createdAt = new Date();
 
 	@JsonIgnore

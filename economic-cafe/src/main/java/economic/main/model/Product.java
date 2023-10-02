@@ -3,13 +3,10 @@ package economic.main.model;
 import java.util.Date;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import economic.main.constants.TypeFileImage;
-import economic.main.ultils.ImageUntils;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,7 +14,7 @@ import lombok.Data;
 @Data
 @Entity
 public class Product {
-   @Id
+   	@Id
 	private String id;
 
 	private String name;
@@ -36,17 +33,8 @@ public class Product {
 
 	private String ingredient;
 
-	@JsonIgnore
-	private int inventory;
-
 	@Column(name="expiry_date")
 	private String expiryDate;
-
-	@Column(name="new_price")
-	private int newPrice;
-
-	@Column(name="old_price")
-	private int oldPrice;
 
 	@Column(name="user_nanual")
 	private String userNanual;
@@ -67,9 +55,12 @@ public class Product {
 	@JsonManagedReference
     private Category category;
 
+	@OneToMany(mappedBy = "product")
+	private Set<Inventory> inventories;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-	@JsonBackReference
+	@JsonManagedReference
 	private Set<Image> images;
 
 	@JsonIgnore

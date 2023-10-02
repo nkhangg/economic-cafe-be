@@ -8,12 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import economic.main.constants.MessageResponse;
+import economic.main.constants.TypeFileImage;
 import economic.main.model.Category;
 import economic.main.model.PostCategory;
 import economic.main.payload.respone.ApiResponce;
 import economic.main.reponsitory.CategoryReponsitory;
 import economic.main.reponsitory.PostCategoryReponsitory;
 import economic.main.service.CategoryService;
+import economic.main.ultils.AppUltil;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
@@ -25,20 +27,19 @@ public class CategoryServiceImpl implements CategoryService{
     @Autowired
     private PostCategoryReponsitory postCategoryReponsitory;
 
+
+    @Autowired
+    private AppUltil appUltil;
+
     @Override
     public List<Category> getCategoriesHome(HttpServletRequest http) {
 
-        
-        // String domain = http.getHeader("Host").contains("http://") ? http.getHeader("Host") : "http://" + http.getHeader("Host");
+        List<Category> categories = categoryReponsitory.findCategoriesHome().stream().map((category) -> {
 
-        // String prefixImageUrl = domain + "/images/" + TypeFileImage.CATEGORIES.value() + "/";
+            category.setThumbnail(appUltil.getUrlImage(category.getThumbnail(), TypeFileImage.CATEGORIES));
 
-        List<Category> categories = new ArrayList<>();
-
-           categoryReponsitory.findCategoriesHome().stream().forEach((category) -> {
-                category.setThumbnail("http://localhost:8088/images/categories/" + category.getThumbnail());
-                categories.add(category);
-            });
+            return category;
+        }).toList();
 
         return categories;
     }

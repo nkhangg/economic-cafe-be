@@ -17,4 +17,5 @@ public class ApiResponce {
     private int status;
     private Object errors;
     private Object data;
+    
 }

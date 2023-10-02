@@ -11,6 +11,7 @@ import economic.main.model.Category;
 import economic.main.model.Product;
 import economic.main.payload.respone.ApiResponce;
 import economic.main.payload.respone.HomepageResponce;
+import economic.main.payload.respone.modal.ProductResponce;
 import economic.main.service.AppPageService;
 import economic.main.service.CategoryService;
 import economic.main.service.ProductService;
@@ -28,7 +29,7 @@ public class AppPageServiceImpl implements AppPageService{
     @Override
     public ApiResponce homePage(HttpServletRequest request) {
         List<Category> categories = categoryService.getCategoriesHome(request);
-        List<Product> products = productService.getProductsHome(request);
+        List<ProductResponce> products = productService.getProductsHome(request);
 
         // check categories, products is empty
         if(categories.isEmpty() || products.isEmpty()){

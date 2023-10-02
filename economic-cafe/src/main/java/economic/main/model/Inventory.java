@@ -3,6 +3,7 @@ package economic.main.model;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,26 +17,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "Likes_Comments")
-public class LikesComments {
-
-    @Id 
+public class Inventory {
+    
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-	@JoinColumn(name="id_user", nullable = false, referencedColumnName = "id")
-    private User user;
+    @Column(name = "name_type")
+    private String nameType;
 
-    @ManyToOne
-	@JoinColumn(name="id_comment", nullable = false, referencedColumnName = "id")
-    private Comment comment;
+    private String weight;
 
-    private boolean state = true;
+    private int price;
+
+    @JsonIgnore
+    @ManyToOne
+	@JoinColumn(name="id_product", nullable = false, referencedColumnName = "id")
+    private Product product;
+
+    private int inventory;
+
+    private boolean deleted = false;
 
     @Column(name="created_at")
     @JsonFormat(pattern="dd/MM/yyy HH:mm:ss")
